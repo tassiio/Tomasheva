@@ -22,7 +22,6 @@ int input()
         else
             {
                 int_num = static_cast<int>(int_num); // type conversion into int if the input is not integer
-                cout << "Your number isn't integer. So I have converted it into " << int_num << ".\n";
                 return int_num;
             }
     }
