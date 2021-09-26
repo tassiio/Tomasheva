@@ -273,9 +273,9 @@ int main()
 
     cout << "Min value for long double type: " << minus_infinity_ld << endl << endl;
 
-    cout << numeric_limits<float>::max() << endl;
-    cout << numeric_limits<double>::max() << endl;
-    cout << numeric_limits<long double>::max() << endl;
+    //cout << numeric_limits<float>::max() << endl;
+    //cout << numeric_limits<double>::max() << endl;
+    //cout << numeric_limits<long double>::max() << endl;
     
     return 0;
 }
