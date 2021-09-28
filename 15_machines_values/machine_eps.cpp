@@ -1,9 +1,5 @@
 #include <iostream>
 #include <limits>
-<<<<<<< HEAD
-#include <cmath>
-=======
->>>>>>> b1f40470ecc574aaeb77a44cdf69f6b870809dfe
 
 using namespace std;
 
