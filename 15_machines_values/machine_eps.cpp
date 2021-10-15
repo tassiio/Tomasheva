@@ -19,18 +19,16 @@ int main() {
     cout << "Machine epsilon for float type: " << epsilon_f * 2.0f << endl;
 
     Mmin_f = 1.0;
-    zero_f = 0.9;
+    zero_f = 1.0;
 
-    while (Mmin_f > zero_f) {
-        Mmin_f = zero_f;
-        if (zero_f / 2.0f != 0) {
-            zero_f = zero_f / 2.0f;
-            //cout << zero_f << endl;
-        } else break;
+    while (Mmin_f / 2.0f != 0) {
+        zero_f = Mmin_f;
+        Mmin_f = Mmin_f / 2.0f;
+        //cout << zero_f << endl;
     }
 
     cout << "Machine zero for float: " << zero_f << endl;
-    cout << "The difference of machine epsilon and zero: " << epsilon_f * 2 - zero_f << endl;
+    cout << "The difference of machine epsilon and zero: " << epsilon_f * 2.0f - zero_f << endl;
 
     float infmax_f = 2.1f;
     float almost_inf_f = 1.0f, infinity_f = 1.0f;
@@ -43,7 +41,7 @@ int main() {
         counter_notmax_f++;
     }
     for (int i = 0; i < counter_notmax_f; i++) {
-        infinity_f = infinity_f * 2.0;
+        infinity_f = infinity_f * 2.0f;
     }
 
     cout << "Max value for float type: " << (infinity_f - 0.5) * 2 << endl;
@@ -80,12 +78,10 @@ int main() {
     Mmin_d = 1.0;
     zero_d = 0.5;
 
-    while (Mmin_d > zero_d) {
-        Mmin_d = zero_d;
-        if (zero_d / 2 != 0) {
-            zero_d = zero_d / 2.0;
-            //cout << zero_f << endl;
-        } else break;
+    while (Mmin_d / 2.0 != 0) {
+        zero_d = Mmin_d;
+        Mmin_d = Mmin_d / 2.0;
+        //cout << zero_d << endl;
     }
 
     cout << "Machine zero for double: " << zero_d << endl;
@@ -143,12 +139,10 @@ int main() {
     Mmin_ld = 1.0;
     zero_ld = 0.9;
 
-    while (Mmin_ld > zero_ld) {
-        Mmin_ld = zero_ld;
-        if (zero_ld / 2 != 0) {
-            zero_ld = zero_ld / 2.0;
-            //cout << zero_f << endl;
-        } else break;
+    while (Mmin_ld / 2.0 != 0) {
+        zero_ld = Mmin_ld;
+        Mmin_ld = Mmin_ld / 2.0;
+        //cout << zero_ld << endl;
     }
 
     cout << "Machine zero for long double: " << zero_ld << endl;
