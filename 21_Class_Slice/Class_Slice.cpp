@@ -2,6 +2,7 @@
 // Created by tassiio on 24.10.2021.
 //
 
+#include <cstring>
 #include "Class_Slice.h"
 
 
@@ -30,8 +31,10 @@ void Class_Slice::S_Parse(std::string Intervals) {
     unsigned int Length_of_S_String = S_String.length();
 
     S_Start_Index = 0;
-    S_Stop_Index = S_Slice_Length-1;
+    S_Stop_Index = S_Slice_Length - 1;
     S_Step = 1;
+
+    //const char minus = '-';
 
     const char Delimeter = ':';
 
@@ -40,21 +43,20 @@ void Class_Slice::S_Parse(std::string Intervals) {
         std::string S_String_Start_Index;
         std::string S_String_Stop_Index;
         std::string S_String_Step;
-        int i = 0;// EOF_Start_Index, EOF_Stop_Index;
+        int i = 0;
 
         while(S_String[i] != ':') {
             S_String_Start_Index += S_String[i];
             i++;
         }
 
-        //EOF_Start_Index = i;
         i++;
 
         while (S_String[i] != ':') {
             S_String_Stop_Index += S_String[i];
             i++;
         }
-        //EOF_Stop_Index = i;
+
         i++;
 
         while (i < S_String.length()) {
@@ -62,20 +64,60 @@ void Class_Slice::S_Parse(std::string Intervals) {
             i++;
         }
 
-        if (!S_String_Start_Index.empty()) {
-            S_Start_Index = std::stoi(S_String_Start_Index);
+        std::string S_String_Start_Index_Tmp;
+        if(!S_String_Start_Index.empty()) {
+            if(S_String_Start_Index.find('-') == 0) {
+                int p = 1;
+
+                while(p < S_String_Start_Index.length()) {
+                    S_String_Start_Index_Tmp += S_String_Start_Index[p];
+                    p++;
+                }
+
+                S_Start_Index = std::stoi(S_String_Start_Index_Tmp);
+                S_Start_Index = (-1) * S_Start_Index;
+            }
+            else {
+                S_Start_Index = std::stoi(S_String_Start_Index);
+            }
         }
-        if (!S_String_Stop_Index.empty()) {
-            S_Stop_Index = std::stoi(S_String_Stop_Index);
+
+        std::string S_String_Stop_Index_Tmp;
+        if(!S_String_Stop_Index.empty()) {
+            if(S_String_Stop_Index.find('-') == 0) {
+                int t = 1;
+
+                while (t < S_String_Stop_Index.length()) {
+                    S_String_Stop_Index_Tmp += S_String_Stop_Index[t];
+                    t++;
+                }
+
+                S_Stop_Index = std::stoi(S_String_Stop_Index_Tmp);
+                S_Stop_Index = (-1) * S_Stop_Index;
+                //std::cout << S_Stop_Index << std::endl;
+            }
+            else {
+                S_Stop_Index = std::stoi(S_String_Stop_Index);
+            }
         }
-        if (!S_String_Step.empty()) {
+
+        if(!S_String_Step.empty()) {
             S_Step = std::stoi(S_String_Step);
         }
+
+        if(S_Start_Index < 0) {
+            S_Start_Index = S_Slice_Length + S_Start_Index;
+        }
+
+        if(S_Stop_Index < 0) {
+            S_Stop_Index = S_Slice_Length + S_Stop_Index;
+        }
+
 //        std::cout << "Type_of_Start: " << typeid(S_Start_Index).name() << std::endl;
 //        std::cout << "Type of Stop: " << typeid(S_Stop_Index).name() << std::endl;
 //        std::cout << "Type of Step: " << typeid(S_Step).name() << std::endl;
 
-        if(S_Stop_Index != S_Slice_Length-1) {
+        if((S_Stop_Index != S_Slice_Length-1) || ((!S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1))) {
 
                 unsigned int New_Length = (S_Stop_Index-1-S_Start_Index)/S_Step + 1;
                 int *New_Array = new int[New_Length];
@@ -109,7 +151,7 @@ void Class_Slice::S_Parse(std::string Intervals) {
 //            }
 
         }
-        else {
+        if((S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1)) {
             unsigned int New_Length = (S_Stop_Index-S_Start_Index)/S_Step + 1;
             int *New_Array = new int[New_Length];
 

@@ -16,7 +16,7 @@ class Class_Slice {
 private:
     int *S_Array;
     int S_Start_Index;
-    unsigned int S_Stop_Index;
+    int S_Stop_Index;
     int S_Step;
     int S_Slice_Length;
     int S_Slice_Current_Item;
