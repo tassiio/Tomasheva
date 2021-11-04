@@ -19,7 +19,7 @@ void Class_Slice::S_Push(int item) {
     assert(S_Slice_Current_Item < S_Slice_Length);
     S_Array[S_Slice_Current_Item] =  item;
     S_Slice_Current_Item++;
-    //std::cout << L_current_item << std::endl;
+
 
 //    for( int p = 0; p < S_Slice_Length; p++)
 //        std::cout << S_Array[p] << std::endl;
@@ -33,8 +33,6 @@ void Class_Slice::S_Parse(std::string Intervals) {
     S_Start_Index = 0;
     S_Stop_Index = S_Slice_Length - 1;
     S_Step = 1;
-
-    //const char minus = '-';
 
     const char Delimeter = ':';
 
@@ -101,8 +99,21 @@ void Class_Slice::S_Parse(std::string Intervals) {
             }
         }
 
+        std::string S_String_Step_Tmp;
         if(!S_String_Step.empty()) {
-            S_Step = std::stoi(S_String_Step);
+            if(S_String_Step.find('-') == 0) {
+                int l = 1;
+
+                while(l < S_String_Step.length()) {
+                    S_String_Step_Tmp += S_String_Step[l];
+                    l++;
+                }
+                S_Step = std::stoi(S_String_Step_Tmp);
+                S_Step = (-1) * S_Step;
+            }
+            else {
+                S_Step = std::stoi(S_String_Step);
+            }
         }
 
         if(S_Start_Index < 0) {
@@ -117,7 +128,8 @@ void Class_Slice::S_Parse(std::string Intervals) {
 //        std::cout << "Type of Stop: " << typeid(S_Stop_Index).name() << std::endl;
 //        std::cout << "Type of Step: " << typeid(S_Step).name() << std::endl;
 
-        if((S_Stop_Index != S_Slice_Length-1) || ((!S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1))) {
+        if(S_Step > 0) {
+            if((S_Stop_Index != S_Slice_Length-1) || ((!S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1))) {
 
                 unsigned int New_Length = (S_Stop_Index-1-S_Start_Index)/S_Step + 1;
                 int *New_Array = new int[New_Length];
@@ -133,41 +145,105 @@ void Class_Slice::S_Parse(std::string Intervals) {
                 std::cout << std::endl;
 
                 delete []New_Array;
-//            if (S_Step < 0) {
-//                unsigned int New_Length = (S_Stop_Index-1-S_Start_Index)/S_Step + 1;
-//                int *New_Array = new int[New_Length];
-//
-//                for(int t = 0; t < New_Length; t++) {
-//                    New_Array[t] = S_Array[S_Start_Index + S_Step*t];
-//                }
-//
-//                std::cout << "Slice: " << std::endl;
-//                for(int t = 0; t < New_Length; t++) {
-//                    std::cout << New_Array[t] << " ";
-//                }
-//                std::cout << std::endl;
-//
-//                delete []New_Array;
-//            }
 
-        }
-        if((S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1)) {
-            unsigned int New_Length = (S_Stop_Index-S_Start_Index)/S_Step + 1;
-            int *New_Array = new int[New_Length];
-
-            for(int t = 0; t < New_Length; t++) {
-                New_Array[t] = S_Array[S_Start_Index + S_Step*t];
             }
+            if((S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1)) {
+                unsigned int New_Length = (S_Stop_Index-S_Start_Index)/S_Step + 1;
+                int *New_Array = new int[New_Length];
 
-            std::cout << "Slice: " << std::endl;
-            for(int t = 0; t < New_Length; t++) {
-                std::cout << New_Array[t] << " ";
+                for(int t = 0; t < New_Length; t++) {
+                    New_Array[t] = S_Array[S_Start_Index + S_Step*t];
+                }
+
+                std::cout << "Slice: " << std::endl;
+                for(int t = 0; t < New_Length; t++) {
+                    std::cout << New_Array[t] << " ";
+                }
+                std::cout << std::endl;
+
+                delete []New_Array;
             }
-            std::cout << std::endl;
-
-            delete []New_Array;
         }
 
+        else {
+            if((S_String_Stop_Index.empty()) && (S_String_Start_Index.empty())) {
+
+                unsigned int New_Length = (S_Stop_Index-S_Start_Index)/abs(S_Step) + 1;
+                int *New_Array = new int[New_Length];
+
+                for(int t = 0; t < New_Length; t++) {
+                    New_Array[t] = S_Array[S_Stop_Index - abs(S_Step)*t];
+                }
+
+                std::cout << "Slice: " << std::endl;
+                for(int t = 0; t < New_Length; t++) {
+                    std::cout << New_Array[t] << " ";
+                }
+                std::cout << std::endl;
+
+                delete []New_Array;
+            }
+
+            if((S_String_Stop_Index.empty()) && (S_Stop_Index == S_Slice_Length-1) && (!S_String_Start_Index.empty())) {
+                S_Stop_Index = 0;
+                std::swap(S_Stop_Index, S_Start_Index);
+                unsigned int New_Length = (S_Stop_Index-S_Start_Index)/abs(S_Step) + 1;
+
+                int *New_Array = new int[New_Length];
+
+                for(int t = 0; t < New_Length; t++) {
+                    New_Array[t] = S_Array[S_Stop_Index - abs(S_Step)*t];
+                }
+
+                std::cout << "Slice: " << std::endl;
+                for(int t = 0; t < New_Length; t++) {
+                    std::cout << New_Array[t] << " ";
+                }
+                std::cout << std::endl;
+
+                delete []New_Array;
+            }
+
+            if((S_String_Start_Index.empty()) && (!S_String_Stop_Index.empty())) {
+                S_Start_Index = S_Slice_Length-1;
+                std::swap(S_Stop_Index, S_Start_Index);
+                unsigned int New_Length = (S_Stop_Index-S_Start_Index-1)/abs(S_Step) + 1;
+                //std::cout << New_Length << std::endl;
+                int *New_Array = new int[New_Length];
+
+                for(int t = 0; t < New_Length; t++) {
+                    New_Array[t] = S_Array[S_Stop_Index - abs(S_Step)*t];
+                }
+
+                std::cout << "Slice: " << std::endl;
+                for(int t = 0; t < New_Length; t++) {
+                    std::cout << New_Array[t] << " ";
+                }
+                std::cout << std::endl;
+
+                delete []New_Array;
+            }
+
+            if(!(S_String_Stop_Index.empty()) && (!S_String_Start_Index.empty())) {
+                std::swap(S_Stop_Index, S_Start_Index);
+                //std::cout << S_Stop_Index << " " << S_Start_Index << std::endl;
+                unsigned int New_Length = (S_Stop_Index-S_Start_Index-1)/abs(S_Step) + 1;
+                //std::cout << New_Length << std::endl;
+                int *New_Array = new int[New_Length];
+
+                for(int t = 0; t < New_Length; t++) {
+                    New_Array[t] = S_Array[S_Stop_Index - abs(S_Step)*t];
+                }
+
+                std::cout << "Slice: " << std::endl;
+                for(int t = 0; t < New_Length; t++) {
+                    std::cout << New_Array[t] << " ";
+                }
+                std::cout << std::endl;
+
+                delete []New_Array;
+            }
+        }
     }
 
     if(std::count(S_String.begin(), S_String.end(), Delimeter) == 1) {

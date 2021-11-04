@@ -20,17 +20,14 @@ private:
     int S_Step;
     int S_Slice_Length;
     int S_Slice_Current_Item;
+
 public:
-//    Class_Slice();
     explicit Class_Slice(int);
 
     void S_Push(int);
 
     void S_Parse(std::string);
     ~Class_Slice();
-
-
-
 };
 
 
