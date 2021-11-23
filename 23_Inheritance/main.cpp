@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Class_LIFO.h"
+#include "Inheritance.h"
 
 using namespace std;
 
@@ -51,7 +51,6 @@ int input_element()
     }
 }
 
-
 int main() {
     cout << "Enter the length of the stack:\n";
     int Length_of_stack = input();
@@ -64,13 +63,33 @@ int main() {
 
         element = input_element();
 
-        Stack.L_Initial_Push(element);
+        Stack.Initial_Push(element);
     }
-    Stack.L_Pop();
+    Stack.Pop();
 
     cout << endl << "Adding new element in the stack..." << endl;
-    Stack.L_Push(6); //Put your new element here pls
+    Stack.Push(6); //Put your new element here pls
 
-    Stack.L_Pop();
+    Stack.Pop();
+
+
+    //Queue block
+
+    cout << "Enter the length of the queue:" << endl;
+    int Length_of_queue = input();
+    int element_q;
+
+    FIFO Queue(Length_of_queue);
+
+    cout << "Enter integer elements of the queue:" << endl;
+    for(int k = 0; k < Length_of_queue; k++) {
+
+        element_q = input_element();
+
+        Queue.Initial_Push(element_q);
+    }
+
+    Queue.Pop();
+    Queue.Push(6);
     return 0;
 }

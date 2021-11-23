@@ -72,5 +72,3 @@ void FIFO::F_Adding_Element(int *&array, int &size, int new_element) {
 FIFO::~FIFO() {
     delete []F_Array;
 }
-
-
