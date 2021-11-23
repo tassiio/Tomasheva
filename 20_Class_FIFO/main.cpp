@@ -53,7 +53,7 @@ int input_element()
 
 
 int main() {
-    cout << "Enter the length of the queue:\n";
+    cout << "Enter the length of the queue:" << endl;
     int Length_of_queue = input();
     int element;
 
@@ -64,13 +64,10 @@ int main() {
 
         element = input_element();
 
-        Queue.F_Push(element);
+        Queue.F_Initial_Push(element);
     }
 
-    cout << endl << "Queue elements (First in, First out):" << endl;
-
-    for(int k = 0; k < Length_of_queue; k++) {
-        Queue.F_Pop();
-    }
+    Queue.F_Pop();
+    Queue.F_Push(6);
     return 0;
 }

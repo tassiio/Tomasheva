@@ -17,11 +17,11 @@ public:
 
     ~FIFO();
 
-    void F_Deleting_First(int *&, int &);
+    static void F_Deleting_First(int *&, int &);
+    static void F_Adding_Element(int *&, int &, int);
+    void F_Initial_Push(int);
     void F_Push(int);
     void F_Pop();
-
-    void F_Printing_Stack(int);
 
 };
 

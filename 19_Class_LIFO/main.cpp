@@ -64,13 +64,15 @@ int main() {
 
         element = input_element();
 
-        Stack.L_Push(element);
+        Stack.L_Initial_Push(element);
     }
+    Stack.L_Pop();
+    Length_of_stack--;
+    cout << endl << "Adding new element in the stack..." << endl;
+    Stack.L_Push(6); //Put your new element here pls
+    Length_of_stack++;
+    Stack.L_Pop();
+    Length_of_stack--;
 
-    cout << endl << "Stack elements (Last in, First out):" << endl;
-
-    for(int k = Length_of_stack; k > 0; k--) {
-        Stack.L_Pop();
-    }
     return 0;
 }

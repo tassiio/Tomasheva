@@ -17,13 +17,11 @@ public:
     int L_current_item;
     ~LIFO();
 
-//int L_top_item;
+    void L_Initial_Push(int);
     void L_Push(int);
+    static void L_Adding_Element(int *&, int &, int);
     void L_Pop();
     static void L_Deleting_Last(int *&, int &);
-
-    void L_Printing_Stack(int);
-
 };
 
 #endif //CLASS_LIFO_CLASS_LIFO_H
